@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const users = require('./routes/api/users');
-const profile = require('./routes/api/profile');
 const projects = require('./routes/api/projects');
 
 const app = express();
@@ -30,7 +29,6 @@ require('./config/passport')(passport);
 
 // Use Routes
 app.use('/api/users', users);
-app.use('/api/profile', profile);
 app.use('/api/projects', projects);
 
 // TODO: colocar isso em um .env 
