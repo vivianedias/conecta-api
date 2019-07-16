@@ -19,13 +19,19 @@ const User = require('../../models/Users');
 router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      errors.email = 'Email already exists';
-      return res.status(400).json(errors);
+      return res.status(400).json({ msg: 'Email already exists' });
     } else {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        birthday: req.body.birthday,
+        gender: req.body.gender,
+        color: req.body.gender,
+        state: req.body.state,
+        city: req.body.city,
+        currentField: req.body.currentField,
+        socialNumber: req.body.socialNumber
       });
 
       bcrypt.genSalt(10, (err, salt) => {
