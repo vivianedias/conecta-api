@@ -28,7 +28,6 @@ const ProjectSchema = new Schema({
         type: String,
         required: true
     },
-    //TODO: Lidar com esse array input -> lá, ele vai receber uma lógica pra entender os valores separados por vírgula (skills) 
     specialNeeds: {
         type: [String],
         required: true
