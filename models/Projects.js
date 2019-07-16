@@ -2,44 +2,50 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-const UserSchema = new Schema({
+const ProjectSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
+    handle: {
+        type: String,
+        required: true,
+        max: 40
+    },
     name: {
         type: String,
         required: true
     },
-    email: {
+    category: {
         type: String,
         required: true
     },
-    password: {
+    description: {
         type: String,
         required: true
     },
-    birthday: {
-        type: Date,
-        required: true
-    },
-    gender: {
+    format: {
         type: String,
         required: true
     },
-    color: {
+    //TODO: Lidar com esse array input -> lá, ele vai receber uma lógica pra entender os valores separados por vírgula (skills) 
+    specialNeeds: {
+        type: [String],
+        required: true
+    },
+    location: {
         type: String,
         required: true
     },
-    state: {
+    estimatedValue: {
         type: String,
         required: true
     },
-    city: {
-        type: String,
+    tags: {
+        type: [String],
         required: true
     },
-    currentField: {
-        type: String,
-        required: true
-    },
-    socialNumber: {
+    pictureUrl: {
         type: String,
         required: true
     },
@@ -49,4 +55,4 @@ const UserSchema = new Schema({
     }
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = Profile = mongoose.model('projects', ProjectSchema);
