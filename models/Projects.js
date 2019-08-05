@@ -3,45 +3,58 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const ProjectSchema = new Schema({
-    user: {
+    userId: {
         type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
+    userName: {
+        type: Schema.Types.String,
         ref: 'users'
     },
     handle: {
         type: String,
         required: true,
-        max: 40
+        max: 40,
+        lowercase: true
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true
     },
     category: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true
     },
     description: {
         type: String,
         required: true
     },
-    format: {
+    objective: {
         type: String,
         required: true
     },
+    format: {
+        type: String,
+        required: true,
+        lowercase: true
+    },
     specialNeeds: {
-        type: [String],
-        required: true
+        type: Array,
+        required: false
     },
     location: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true
     },
     estimatedValue: {
         type: String,
         required: true
     },
     tags: {
-        type: [String],
+        type: Array,
         required: true
     },
     pictureUrl: {
