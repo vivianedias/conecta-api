@@ -9,14 +9,15 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
     },
     birthday: {
-        type: Date,
+        type: String,
         required: true
     },
     gender: {
@@ -43,10 +44,17 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    resetPasswordToken: {
+        type: String,
+        unique: true,
+    },
+    resetPasswordExpires: {
+        type: Date,
+    },
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
 });
 
 module.exports = User = mongoose.model('users', UserSchema);
