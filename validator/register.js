@@ -43,7 +43,7 @@ module.exports = function validateRegisterInput(data) {
         errors.confirmedPassword = 'Confirme sua senha';
     }
     if(!Validator.equals(data.password, data.confirmedPassword)) {
-        errors.confirmedPassword = 'Essas senhas não coincidem. Tentar novamente';
+        errors.confirmedPassword = 'Essas senhas não coincidem';
     }
 
     // Birthday

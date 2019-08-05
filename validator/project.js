@@ -8,8 +8,8 @@ module.exports = function validateProjectInput(data) {
     data.name = !isEmpty(data.name) ? data.name : '';
     data.category = !isEmpty(data.category) ? data.category : '';
     data.description = !isEmpty(data.description) ? data.description : '';
+    data.objective = !isEmpty(data.objective) ? data.objective : '';
     data.format = !isEmpty(data.format) ? data.format : '';
-    data.specialNeeds = !isEmpty(data.specialNeeds) ? data.specialNeeds : '';
     data.location = !isEmpty(data.location) ? data.location : '';
     data.estimatedValue = !isEmpty(data.estimatedValue) ? data.estimatedValue : '';
     data.tags = !isEmpty(data.tags) ? data.tags : '';
@@ -17,17 +17,17 @@ module.exports = function validateProjectInput(data) {
 
     // handle
     if(Validator.isEmpty(data.handle)) {
-        errors.handle = 'É necessário um Handle para o Projeto';
+        errors.handle = 'É necessário uma url para o Projeto';
     } 
     if(!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-        errors.handle = 'Handle precisa ter entre 2 e 4 caracteres'
+        errors.handle = 'Url precisa ter entre 2 e 40 caracteres'
     }
 
     // name
     if(Validator.isEmpty(data.name)) {
         errors.name = 'Seu projeto precisa de um nome';
     }
-    if(!Validator.isLength(data.name, { min: 2, max: 50 })) {
+    if(!Validator.isLength(data.name, { min: 2, max: 30 })) {
         errors.name = 'Nome deve ter no mínimo 2 caracteres';
     }
 
@@ -44,15 +44,19 @@ module.exports = function validateProjectInput(data) {
         errors.description = 'Descrição deve ter no mínimo 10 caracteres';
     }
 
+    // objective
+    if(Validator.isEmpty(data.objective)) {
+        errors.objective = 'Informe um objetivo para o projeto';
+    }
+    if(!Validator.isLength(data.objective, { min: 10, max: undefined })) {
+        errors.objective = 'Objetivo deve ter no mínimo 10 caracteres';
+    }
+
     // format
     if(Validator.isEmpty(data.format)) {
         errors.format = 'Informe o formato do seu projeto';
     }
 
-    // specialNeeds
-    if(Validator.isEmpty(data.specialNeeds)) {
-        errors.specialNeeds = 'Esse campo é obrigatório';
-    }
     // location
     if(Validator.isEmpty(data.location)) {
         errors.location = 'Informe onde seu projeto está localizado';
@@ -67,8 +71,8 @@ module.exports = function validateProjectInput(data) {
     }
 
     // tags
-    if(Validator.isEmpty(data.tags)) {
-        errors.tags = 'É obrigatório adicionar tags';
+    if(isEmpty(data.tags)) {
+        errors.tags = 'Insira pelo menos uma tag';
     }
 
     // pictureUrl
