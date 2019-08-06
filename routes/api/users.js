@@ -24,36 +24,37 @@ router.post('/register', (req, res) => {
 		return res.status(400).json(errors);
 	}
 
-	User.findOne({ email: req.body.email }).then(user => {
-		if (user) {
-		errors.email = 'Email already exists'
-		return res.status(400).json(errors);
-		} else {
-		const newUser = new User({
-			name: req.body.name,
-			email: req.body.email,
-			password: req.body.password,
-			birthday: req.body.birthday,
-			gender: req.body.gender,
-			color: req.body.gender,
-			state: req.body.state,
-			city: req.body.city,
-			currentField: req.body.currentField,
-			socialNumber: req.body.socialNumber
-		});
-
-		bcrypt.genSalt(10, (err, salt) => {
-			bcrypt.hash(newUser.password, salt, (err, hash) => {
-			if (err) throw err;
-			newUser.password = hash;
-			newUser
-				.save()
-				.then(user => res.json(user))
-				.catch(err => console.log(err));
+	User.findOne({ email: req.body.email })
+		.then(user => {
+			if (user) {
+				errors.email = 'Email already exists'
+				return res.status(400).json(errors);
+			} else {
+			const newUser = new User({
+				name: req.body.name,
+				email: req.body.email,
+				password: req.body.password,
+				birthday: req.body.birthday,
+				gender: req.body.gender,
+				color: req.body.gender,
+				state: req.body.state,
+				city: req.body.city,
+				currentField: req.body.currentField,
+				socialNumber: req.body.socialNumber
 			});
+
+			bcrypt.genSalt(10, (err, salt) => {
+				bcrypt.hash(newUser.password, salt, (err, hash) => {
+				if (err) throw err;
+				newUser.password = hash;
+				newUser
+					.save()
+					.then(user => res.json(user))
+					.catch(err => console.log(err));
+				});
+			});
+			}
 		});
-		}
-	});
 	});
 
 	// @route   GET api/users/login
@@ -123,78 +124,125 @@ router.post('/register', (req, res) => {
 // @desc    Send email to reset password
 // @access  Public
 router.post('/forgot-password', (req, res) => {
+
 	const errors = {}
 	const email = req.body.email;
 	const token = crypto.randomBytes(20).toString('hex');
 
-	const update = { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 }
+	const update = { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 };
 
-	//Update
-	User.findOneAndUpdate(
-		{ email: req.body.email },
-		{ $set: update },
-		{ new: true }
-	)
-	.then(user => res.json(user))
-	.catch(err => res.status(404).json({ setToken: 'Um erro aconteceu ao atualizar o código de recuperação' }));
+	if(email === '') {
+		errors.recovery = 'Campo obrigatório';
+		return res.status(400).json(errors);
+	}
 
 	User.findOne({ email })
 		.then(user => {
 			// Check for user
 			if (!user) {
-				errors.email = 'Usuário não encontrado'
+				errors.recovery = 'Usuário não encontrado'
 				return res.status(400).json(errors);
 			}
-			
-			sgMail.setApiKey(keys.SENDGRID_API_KEY);
 
-			const msg = {
-				to: email,
-				from: 'abebe.conecta@gmail.com',
-				subject: 'Recuperação de Senha - Abebe Conecta',
-				text: 'Você está recebendo esse e-mail porque você (ou outra pessoa) fez um pedido de recuperação de senha para sua conta. \n\n' +
-				'Por favor, clique no link abaixo ou cole em seu navegador para completar o processo: \n\n' +
-				'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-				'Se você não fez essa requisição, por favor ignore esse email e sua senha se manterá a mesma. \n'
-			};
+			//Update reset password token and exp date
+			User.findOneAndUpdate(
+				{ email },
+				{ $set: update },
+				{ new: true }
+			)
+			.then(() => {
+				sgMail.setApiKey(keys.SENDGRID_API_KEY);
+	
+				const msg = {
+					to: email,
+					from: 'abebe.conecta@gmail.com',
+					subject: 'Recuperação de Senha - Abebe Conecta',
+					text: 'Você está recebendo esse e-mail porque você (ou outra pessoa) fez um pedido de recuperação de senha para sua conta. \n\n' +
+					'Por favor, clique no link abaixo ou cole em seu navegador para completar o processo: \n\n' +
+					'http://' + req.headers.host + '/redefinir/' + token + '\n\n' +
+					'Se você não fez essa requisição, por favor ignore esse email e sua senha se manterá a mesma. \n'
+				};
+
+				sgMail.send(msg)
+				.then(() => res.json('Se esse e-mail estiver cadastrado em nossa base de usuários, enviaremos um e-mail com as instruções para redefinir sua senha :)'))
+				.catch(err => {
+					errors.recovery = 'Um erro ocorreu ao enviar o código de restauração';
+					return res.status(404).json(errors);
+				})
+			})
+			.catch(err => {
+				errors.recovery = 'Um erro ocorreu ao atualizar o código de recuperação';
+				return res.status(404).json(errors);
+			});
 			
-			sgMail.send(msg)
-			.then(() => res.json('Se esse e-mail estiver cadastrado em nossa base de usuários, enviaremos um e-mail com as instruções para redefinir sua senha :)'))
-			.catch(err => res.status(404).json({ sendEmail: 'Um erro ocorreu ao enviar o código de restauração' }))
 		})
-		.catch(err => res.status(404).json({ findUser: 'Um erro ocorreu ao tentar encontrar esse usuário' }));
+		.catch(err => {
+			errors.recovery = 'Usuário não encontrado';
+			return res.status(400).json(errors);
+		});
 });
 
-// router.post('/reset/:token', (req, res, next) => {
+router.post('/reset/:token', (req, res, next) => {
+	const errors = {}
+	
+	const { password, confirmedPassword } = req.body;
 
-// 		// if passwords don't match, flash error and send back to form
-// 		if (req.body.password != req.body['password-confirm']) {
-// 			req.flash('error', 'Passwords do not match!');
-// 			res.redirect('/users/change-password');  // insert actual form URL
-// 			return; // we're done handling the route, exit function
-// 		}
+	// if passwords don't match, flash error and send back to form
+	if (password !== confirmedPassword) {
+		errors.resetPassword = 'Senhas não coincidem'
+		return res.status(400).json(errors);
+	} else if (password.length < 6) {
+		errors.resetPassword = 'A senha precisa ter no mínimo 6 caracteres'
+		return res.status(400).json(errors);
+	}
+	// if we get to here, the passwords match
+	User.findOne({ 
+		'resetPasswordToken': req.params.token, 
+		'resetPasswordExpires': { $gt: Date.now() } 
+	})
+	.then(user => {
+		if (!user) {
+			errors.resetPassword = 'Recuperação de senha é inválida ou expirou'
+			return res.status(404).json(errors);
+		}
 
-// 		// if we get to here, the passwords match
-// 		User.findOne({
-// 		resetPasswordToken: req.params.token,
-// 		resetPasswordExpires: {
-// 			$gt: Date.now()
-// 		}
-// 		}, function(err, user) {
-// 		if (!user) {
-// 			req.flash('error', ' Password reset is invalid or has expired');
-// 			res.redirect(302, '/login');
-// 		}
+		let password  = req.body.password;
+		bcrypt.genSalt(10, (err, salt) => {
+			if (err) throw err;
+			bcrypt.hash(password, salt, (err, hash) => {
+				if (err) throw err;
+				password = hash;
+				const update = { password }
+				//Update password
+				User.findOneAndUpdate(
+					{ resetPasswordToken: req.params.token },
+					{ $set: update },
+					{ new: true }
+				)
+				.then(user => res.json('Sua senha foi recuperada com sucesso'))
+				.catch(err => {
+					errors.resetPassword = 'Um erro aconteceu ao atualizar sua senha'
+					return res.status(404).json(errors);
+				});
+			});
+		})
+	
+		const update = { resetPasswordToken: null, resetPasswordExpires: null };
 
-// 		const setPassword = promisify(user.setPassword, user);
-// 		setPassword(req.body.password);
-// 		user.resetPasswordToken = undefined;
-// 		user.resetPasswordExpires = undefined;
-// 		const updatedUser = user.save();
-// 		req.login(updatedUser);
-// 		req.flash('success_msg', 'Your password has been reset successfully! You are now logged in!');
-// 		res.redirect('/dashboard');
-// 		});
-// });
+		//Update reset password token and exp date to null after reset password was
+		// used once
+		User.findOneAndUpdate(
+			{ resetPasswordToken: req.params.token },
+			{ $set: update },
+			{ new: true }
+		)
+		.then(res => res.json(res))
+		.catch(err => console.log(err))
+	})
+	.catch(() => {
+		errors.resetPassword = 'Um erro aconteceu ao tentar localizar o usuário'
+		return res.status(404).json(errors);
+	})
+});
 
 module.exports = router;
