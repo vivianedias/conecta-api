@@ -5,6 +5,8 @@ const passport = require('passport');
 
 //Load Validation
 const validateProjectInput = require('../../validator/project');
+// Load Update Project Validation
+const validateUpdateProject = require('../../validator/updateProject');
 // Load Profile Model
 const Projects = require('../../models/Projects');
 // Load User Profile
@@ -122,11 +124,13 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         .catch(err => res.status(404).json({ newProject: 'Algo de errado ocorreu ao criar o projeto' }));
 });
 
-// @route   POST api/projects/user/:projectId
+// @route   POST api/projects/user/:projectHandle
 // @desc    Update user project
 // @access  Private
-router.post('/user/:projectId', passport.authenticate('jwt', { session: false }), (req, res) => {
-    const { errors, isValid } = validateProjectInput(req.body);
+router.post('/user/:projectHandle', 
+    passport.authenticate('jwt', { session: false }), 
+    (req, res) => {
+    const { errors, isValid } = validateUpdateProject(req.body);
 
     // Check Validation
     if(!isValid) {
@@ -136,28 +140,26 @@ router.post('/user/:projectId', passport.authenticate('jwt', { session: false })
     
     // Get fields
     const projectFields = {};
-    projectFields.user = req.user.id;
-    if(req.body.handle) projectFields.handle = req.body.handle;
-    if(req.body.name) projectFields.name = req.body.name;
     if(req.body.category) projectFields.category = req.body.category;
     if(req.body.description) projectFields.description = req.body.description;
     if(req.body.objective) projectFields.objective = req.body.objective;
-    if(req.body.format) projectFields.format = req.body.format;
+    if(req.body.format) projectFields.format = req.body.format;    
     if(req.body.location) projectFields.location = req.body.location;
     if(req.body.estimatedValue) projectFields.estimatedValue = req.body.estimatedValue;
-    if(req.body.pictureUrl) projectFields.pictureUrl = req.body.pictureUrl;
     if(req.body.tags) projectFields.tags = req.body.tags;
-    if(req.body.specialNeeds) projectFields.specialNeeds = req.body.specialNeeds;
+    // if(req.body.pictureUrl) projectFields.pictureUrl = req.body.pictureUrl;
 
     // Only let own user projects be updated - probably use map and filter
-    //Update
+    //Update project
     Projects.findOneAndUpdate (
-        { _id: req.params.projectId },
+        { handle: req.params.projectHandle },
         { $set: projectFields },
         { new: true }
     )
     .then(project => res.json(project))
-    .catch(err => res.status(404).json({ updateProject: 'Um erro aconteceu ao atualizar o projeto' }));
+    .catch(err => res.status(404).json({ 
+        updateProject: 'Um erro aconteceu ao atualizar o projeto' 
+    }));
 });
 
 module.exports = router;

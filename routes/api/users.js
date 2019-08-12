@@ -136,7 +136,7 @@ router.post('/forgot-password', (req, res) => {
 		return res.status(400).json(errors);
 	}
 
-	User.findOne({ email })
+	User.findOne({ email: req.body.email })
 		.then(user => {
 			// Check for user
 			if (!user) {
@@ -159,7 +159,7 @@ router.post('/forgot-password', (req, res) => {
 					subject: 'Recuperação de Senha - Abebe Conecta',
 					text: 'Você está recebendo esse e-mail porque você (ou outra pessoa) fez um pedido de recuperação de senha para sua conta. \n\n' +
 					'Por favor, clique no link abaixo ou cole em seu navegador para completar o processo: \n\n' +
-					'http://' + req.headers.host + '/redefinir/' + token + '\n\n' +
+					'http://' + req.headers.host + '/reset/' + token + '\n\n' +
 					'Se você não fez essa requisição, por favor ignore esse email e sua senha se manterá a mesma. \n'
 				};
 
@@ -195,49 +195,45 @@ router.post('/reset/:token', (req, res, next) => {
 		errors.resetPassword = 'A senha precisa ter no mínimo 6 caracteres'
 		return res.status(400).json(errors);
 	}
+
 	// if we get to here, the passwords match
 	User.findOne({ 
 		'resetPasswordToken': req.params.token, 
 		'resetPasswordExpires': { $gt: Date.now() } 
 	})
 	.then(user => {
+
 		if (!user) {
 			errors.resetPassword = 'Recuperação de senha é inválida ou expirou'
 			return res.status(404).json(errors);
 		}
 
-		let password  = req.body.password;
+		var passwordHash  = password;
 		bcrypt.genSalt(10, (err, salt) => {
 			if (err) throw err;
-			bcrypt.hash(password, salt, (err, hash) => {
+			bcrypt.hash(passwordHash, salt, (err, hash) => {
 				if (err) throw err;
-				password = hash;
-				const update = { password }
-				//Update password
+				passwordHash = hash;
+				//Update password and set password token and exp date to null
+				const updatePassword = { 
+					password: passwordHash,
+					resetPasswordToken: null, 
+					resetPasswordExpires: null 
+				}
 				User.findOneAndUpdate(
 					{ resetPasswordToken: req.params.token },
-					{ $set: update },
+					{ $set: updatePassword },
 					{ new: true }
 				)
-				.then(user => res.json('Sua senha foi recuperada com sucesso'))
+				.then(user => {
+					res.json('Sua senha foi redefinida com sucesso')
+				})
 				.catch(err => {
 					errors.resetPassword = 'Um erro aconteceu ao atualizar sua senha'
 					return res.status(404).json(errors);
 				});
 			});
 		})
-	
-		const update = { resetPasswordToken: null, resetPasswordExpires: null };
-
-		//Update reset password token and exp date to null after reset password was
-		// used once
-		User.findOneAndUpdate(
-			{ resetPasswordToken: req.params.token },
-			{ $set: update },
-			{ new: true }
-		)
-		.then(res => res.json(res))
-		.catch(err => console.log(err))
 	})
 	.catch(() => {
 		errors.resetPassword = 'Um erro aconteceu ao tentar localizar o usuário'

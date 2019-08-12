@@ -1,7 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const db = require('./config/db');
 
 const users = require('./routes/api/users');
 const projects = require('./routes/api/projects');
@@ -12,14 +12,13 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// DB Config
-const db = require('./config/keys').mongoURI;
-
-// Connect to MongoDB
-mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// DB Config - Atlas MongoDb
+// const db = require('./config/keys').mongoURI;
+// // Connect to MongoDB - Atlas MongoDb
+// mongoose
+//   .connect(db, { useNewUrlParser: true })
+//   .then(() => console.log('MongoDB Connected'))
+//   .catch(err => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
