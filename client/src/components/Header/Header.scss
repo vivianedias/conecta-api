@@ -1,0 +1,88 @@
+@import '../../assets/mixins/variables.scss';
+
+.app-header {
+    &__item {
+        display: flex;
+        &-user {
+            display: flex;
+            width: 80px;
+            margin-top: 5px;
+            margin-left: 20px;
+        }
+    }
+    &__link {
+        font-family: 'Comfortaa', cursive;
+        text-decoration: none;
+        width: 100%;
+        @media(min-width: $mobile) {
+            width: unset;
+        }
+        &.navbar-item:hover {
+            background-color: $mainColor;
+            color: #fff !important;
+            text-decoration: none;
+        }
+        &--active {
+            border-bottom: 2px solid $mainColor;
+            font-weight: 700;
+        }
+        &-logout {
+            width: 70px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+    &__user {
+        font-family: 'Comfortaa', cursive;
+        text-decoration: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid hsl(0, 0%, 29%);
+        display: flex;
+        justify-content: center;
+        &-name {
+            font-weight: 700;
+        }
+        &.navbar-item:hover {
+            background-color: $mainColor;
+            border: 2px solid $mainColor;
+            color: #fff !important;
+            text-decoration: none;
+        }   
+    }
+    &__btn{ 
+        &-signup, &-login { font-family: $mainFont; font-size: 16px; }
+        &-signup {
+        background-color: $mainColor;
+        font-weight: 600;
+        color: #fff;
+            &:hover, &:focus {
+                color: hsl(0, 0%, 14%);
+                background-color: #fff;
+                border: 1px solid $mainColor;
+                font-weight: 400;
+            }
+        }
+    }
+    &__btn-wrapper {
+        &.buttons {
+            align-items: flex-start;
+            justify-content: unset;
+            flex-direction: column;
+            @media(min-width: $largeDesktop) {
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+            }
+        }
+    }
+}
+
+.dropdown {
+    >.dropdown-menu {
+        min-width: unset;
+        width: 100px;
+        left: -10px;
+    }
+}

@@ -1,0 +1,166 @@
+@import '../../assets/mixins/variables.scss';
+
+.project {
+    @media(min-width: $tablet) {
+        display: flex;
+        justify-content: center;
+    }
+    &__wrapper {
+        @media(min-width: $tablet) {
+            @include wrapperSize;
+            display: unset;
+            flex-direction: unset;
+            align-items: unset;
+        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__main-content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
+        align-items: flex-start;
+        width: 90%;
+        @media(min-width: $tablet) { 
+            align-items: unset;
+            width: unset;
+        }
+        @media(min-width: 900px) {
+            flex-direction: row;            
+        }
+    }
+    &__name {
+        font-family: $mainFont;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        &.title.is-2 {
+            @media(min-width: $mobile) {
+                font-size: 2.5rem;
+            }
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+    }
+    &__author {
+        text-transform: uppercase;
+        font-family: $mainFont;   
+        font-size: 12px;
+        @media(min-width: $desktop) {
+            font-size: 14px;
+        }
+    }
+    &__label {
+        @include uppercaseTitle;
+        display: block
+    }
+    &__other-content {
+        margin-top: 40px;
+        display: flex;
+        width: 90%;        
+        flex-direction: column;
+        @media(min-width: $tablet) {
+            flex-direction: row;
+            width: unset;
+        }
+        @media(min-width: $mobile) {
+            flex-wrap: wrap;
+        }
+    }
+    &__description {
+        @media(min-width: 900px) {
+            margin-top: unset;
+        }
+        &.is-size-5 { 
+            font-size: unset !important;
+            @media(min-width: $mobile) {
+                font-size: 1.25rem;
+            }
+        }
+        margin-top: 40px;
+    }
+    &__objective {
+        @media(min-width: $tablet) {
+            width: 85%;
+        }
+    }
+    &__location, &__category, &__format {
+        text-transform: capitalize;
+    }
+    &__success {
+        @media(min-width: $tablet) {
+            margin-right: 20px;
+            order: 1;
+        }
+        margin-left: 20px;
+        order: 2;
+    }
+    &__status {
+        color: green;
+        max-height: 100%;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        @media(min-width: $tablet) {
+            right: 0;
+            left: unset;
+            margin-top: 5px;
+            margin-bottom: unset;
+        }
+        @media(min-width: $tablet) and (max-width: 900px) {
+            top: 40px;
+        }
+        margin-right: 15px;
+        margin-bottom: 15px;
+        right: unset;
+        left: 0;
+    }
+    &__btn-edit {
+        @media(min-width: $tablet) {
+            margin-right: 20px;
+            order: 2;
+        }
+        order: 1;
+        margin-left: 20px;
+    }
+}
+
+.main-content {
+    &__img {
+        align-self: center;
+        @media(min-width: 900px) {
+            align-self: unset;
+        }
+    }
+    &__text {
+        @media(min-width: 900px) {
+            padding: 0 20px;
+        }
+        padding: unset;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        >.custom-textarea {
+            margin-top: 1.75rem;
+        }
+    }
+}
+
+.other-content {
+    &__wrapper {
+        margin-bottom: 30px;
+        width: 100%;
+        @media(min-width: $tablet) {
+            width: 50%;
+        }
+        &:last-child {
+            >h7.project__label.title.is-size-5 {
+                display: block;
+            }
+        }
+        &--isEdit {
+            padding-right: 40px;
+        }
+    }
+}

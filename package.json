@@ -5,8 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "yarn --cwd client",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "yarn --cwd client start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""  
   },
   "repository": {
     "type": "git",
@@ -31,7 +34,6 @@
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "express-fileupload": "^1.1.5",
     "nodemon": "^1.19.1"
   }
 }
