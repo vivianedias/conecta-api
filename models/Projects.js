@@ -57,7 +57,7 @@ const ProjectSchema = new Schema({
         type: Array,
         required: true
     },
-    pictureUrl: {
+    img: {
         type: String,
         required: true
     },

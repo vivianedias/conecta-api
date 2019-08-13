@@ -13,7 +13,7 @@ module.exports = function validateProjectInput(data) {
     data.location = !isEmpty(data.location) ? data.location : '';
     data.estimatedValue = !isEmpty(data.estimatedValue) ? data.estimatedValue : '';
     data.tags = !isEmpty(data.tags) ? data.tags : '';
-    data.pictureUrl = !isEmpty(data.pictureUrl) ? data.pictureUrl : '';
+    data.img = !isEmpty(data.img) ? data.img : '';
 
     // handle
     if(Validator.isEmpty(data.handle)) {
@@ -75,16 +75,11 @@ module.exports = function validateProjectInput(data) {
         errors.tags = 'Insira pelo menos uma tag';
     }
 
-    // pictureUrl
-    if(Validator.isEmpty(data.pictureUrl)) {
-        errors.pictureUrl = 'Esse campo é obrigatório';
+    // img
+    if(Validator.isEmpty(data.img)) {
+        errors.img = 'Esse campo é obrigatório';
     }
-    if(!isEmpty(data.pictureUrl)) {
-        if(!Validator.isURL(data.pictureUrl)) {
-            errors.pictureUrl = 'Essa foto não é válida'
-        }
-    }
-        
+
     return {
         errors, 
         isValid: isEmpty(errors)
