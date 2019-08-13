@@ -7,7 +7,8 @@ export function upload(state = initialState, action) {
     case SET_IMG_UPLOAD:
       return  { 
         ...state, 
-        ...action.value 
+        ...action.value,
+				isLoading: action.isLoading
       }
     default:
       return state;

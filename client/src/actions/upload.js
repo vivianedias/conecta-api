@@ -1,17 +1,29 @@
-import { SET_IMG_UPLOAD } from './types';
+import { SET_IMG_UPLOAD, SET_IMG_UPLOAD_ERRORS } from './types';
 import axios from 'axios';
 
 export function uploadImg(img) {
   return dispatch => {
-    axios.post(`/api/projects/upload`, img)
-    .then(res => dispatch(handleImgRes(res.data)))
+    dispatch(handleImgRes(true));
+    return axios.post(`/api/projects/upload`, img)
+    .then(res => dispatch(handleImgRes(false, res.data)))
     .catch(err => {
-      console.log(err.response.data);
+      handleErrors(err.response.data);
     });
   };
 };
 
-const handleImgRes = value => ({
+const handleImgRes = (isLoading, value) => ({
   type: SET_IMG_UPLOAD,
+  isLoading, value
+});
+
+export function handleErrors(value) {
+  return (dispatch) => {
+    dispatch(setImgUploadErrors(value))
+  };
+};
+
+const setImgUploadErrors = value => ({
+  type: SET_IMG_UPLOAD_ERRORS,
   value
 });

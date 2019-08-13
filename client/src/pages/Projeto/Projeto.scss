@@ -18,16 +18,15 @@
     }
     &__main-content {
         display: flex;
-        flex-direction: column;
         margin-top: 40px;
         align-items: flex-start;
         width: 90%;
+        flex-direction: column;
         @media(min-width: $tablet) { 
+            justify-content: space-around;
             align-items: unset;
             width: unset;
-        }
-        @media(min-width: 900px) {
-            flex-direction: row;            
+            flex-direction: row;
         }
     }
     &__name {
@@ -127,10 +126,10 @@
 
 .main-content {
     &__img {
-        align-self: center;
-        @media(min-width: 900px) {
-            align-self: unset;
+        @media(min-width: $tablet) {
+            align-self: center;
         }
+        max-width: 400px;
     }
     &__text {
         @media(min-width: 900px) {

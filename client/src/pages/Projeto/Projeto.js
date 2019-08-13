@@ -119,7 +119,7 @@ class Projeto extends Component {
 							<div className="project__main-content">
 								<img 
 									className="main-content__img" 
-									src={project.pictureUrl} 
+									src={`http://localhost:5000/uploads/${project.img}`} 
 									alt="" 
 								/>
 								<div className="main-content__text">

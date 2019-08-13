@@ -1,0 +1,29 @@
+.custom-file {
+  display: flex;
+  &__content {
+    justify-content: space-evenly;
+  }
+  &__form {
+    margin: 40px 0 40px 40px;
+  }
+  &__success {
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: 600;
+    color: green;
+  }
+  &__btn {
+    align-items: stretch;
+    width: 100%;
+    background-color: #ff3860;
+    color: #fff;
+    &:hover {
+      font-weight: 600;
+      border: 1px solid #ff3860;
+      background-color: #fff;
+    }
+  }
+  &__img {
+    width: 500px;
+  }
+}

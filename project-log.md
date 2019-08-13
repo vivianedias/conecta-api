@@ -36,3 +36,5 @@
     ## Executar dois scripts ao mesmo tempo
         - concurrently package
         - Yarn não usa "--prefix", usa "--cwd"
+    ## Carregar arquivos estáticos do servidor
+        - https://expressjs.com/en/starter/static-files.html

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleErrors, handleProject } from '../../actions/project';
-import { uploadImg } from '../../actions/upload';
+import { uploadImg, handleErrors } from '../../actions/upload';
+import { handleProject } from '../../actions/project';
 import './CustomFile.scss';
-
 class CustomFile extends Component { 
 
 	constructor(props) {
@@ -53,10 +52,17 @@ class CustomFile extends Component {
 	render() {
 		const { errors, uploadRes } = this.props;
 		return (
-			<div className="custom-file">
+			<div 
+				className={`custom-file
+				${uploadRes.file
+					? 'custom-file__content' 
+					: ''}`
+				}
+			>
 				<form 
 					encType="multipart/form-data"
 					onSubmit={this.onSubmit}
+					className="custom-file__form"
 				>
 					<div className="field">
 						<div 
@@ -84,18 +90,31 @@ class CustomFile extends Component {
 							{errors.file && <p className="help is-danger">{errors.file}</p>}
 						</div>
 					</div>
-					<button className="button" type="submit">
-						Enviar
+					<button 
+						className={`custom-file__btn button ${uploadRes.isLoading 
+							? 'is-loading' 
+							: ''}`
+						}
+						type="submit"
+						>
+						Upload
 					</button>
+					{uploadRes && 
+						<p className="custom-file__success">{uploadRes.msg}</p>
+					}
 				</form>
 				{uploadRes && (
-					<React.Fragment>
-						<p>{uploadRes.msg}</p>
+					<div className="custom-file__res">
 						<img 
-							src={`/public/${uploadRes.img}`}
+							src={`http://localhost:5000/${uploadRes.file}`}
 							alt="Imagem selecionada como capa do projeto"
+							style={uploadRes.file 
+								? { display: 'initial' } 
+								: { display: 'none' }
+							}
+							className="custom-file__img"
 						/>
-					</React.Fragment>
+					</div>
 				)}
 			</div>
 		);
@@ -103,7 +122,7 @@ class CustomFile extends Component {
 }
 
 const mapStateToProps = state => ({
-	errors: state.errors && state.errors.project,
+	errors: state.errors && state.errors.upload,
 	uploadRes: state.upload
 })
 

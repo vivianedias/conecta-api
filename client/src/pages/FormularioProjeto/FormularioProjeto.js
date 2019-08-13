@@ -16,7 +16,7 @@ class FormularioProjeto extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            step: 3,
+            step: 0,
         }
     }
 
@@ -130,7 +130,7 @@ class FormularioProjeto extends Component {
     }
 
     render() {
-        const { errors } = this.props;
+        const { errors, projectForm } = this.props;
         const { step } = this.state;
 
         return (
@@ -150,6 +150,10 @@ class FormularioProjeto extends Component {
                                         onChange={this.handleChange}
                                         error={errors && errors.description}
                                         isEdit={true}
+                                        value={projectForm 
+                                            ? projectForm.description 
+                                            : ''
+                                        }
                                     />
                                     <CustomTextarea 
                                         label="Objetivo"
@@ -158,6 +162,10 @@ class FormularioProjeto extends Component {
                                         onChange={this.handleChange}
                                         error={errors && errors.objective}
                                         isEdit={true}
+                                        value={projectForm 
+                                            ? projectForm.objective 
+                                            : ''
+                                        }
                                     />
                                 </React.Fragment>
                             )}
@@ -173,6 +181,10 @@ class FormularioProjeto extends Component {
                                         firstValue="Formato"
                                         options={['Exposição', 'Intervenção', 'Produção', 'Roda de Conversa', 'Oficina', 'Show']}
                                         isEdit={true}
+                                        value={projectForm 
+                                            ? projectForm.format 
+                                            : ''
+                                        }
                                     />
                                     <CustomMultiple
                                         label="Faça uma lista com itens que você precisa no seu projeto"
@@ -181,7 +193,6 @@ class FormularioProjeto extends Component {
                                 </React.Fragment>
                             )}
                             {/* TODO: Fazer integração com Google Maps */}
-                            {/* TODO: Colocar máscara para dinheiro */}
                             {step === 2 && (
                                 <React.Fragment>
                                     <CustomField 
@@ -196,6 +207,10 @@ class FormularioProjeto extends Component {
                                         showRightIcon={true}
                                         error={errors && errors.location}
                                         isEdit={true}
+                                        value={projectForm 
+                                            ? projectForm.location 
+                                            : ''
+                                        }
                                     />
                                     <CustomField 
                                         label="Valor estimado"
@@ -215,6 +230,10 @@ class FormularioProjeto extends Component {
                                         placeholder="Insira até cinco palavras-chave"
                                         error={errors && errors.tags}
                                         isEdit={true}
+                                        value={projectForm 
+                                            ? projectForm.tags 
+                                            : ''
+                                        }
                                     />
                                 </React.Fragment>
                             )}
@@ -233,6 +252,10 @@ class FormularioProjeto extends Component {
                                         error={errors && errors.handle}
                                         isEdit={true}
                                         help="Dica: Crie uma url que seja fácil de lembrar, esteja ligada ao nome do seu projeto e que não possua espaços nem caracteres especiais!"
+                                        value={projectForm 
+                                            ? projectForm.handle 
+                                            : ''
+                                        }
                                     />
                                     <CustomFile 
                                         validateBeforeNext={this.validateBeforeNext}

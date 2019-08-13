@@ -25,7 +25,6 @@ import Projeto from '../pages/Projeto/Projeto';
 import ProjetoEnviado from '../pages/ProjetoEnviado/ProjetoEnviado';
 import EsqueciSenha from '../pages/EsqueciSenha/EsqueciSenha';
 import RedefinirSenha from '../pages/RedefinirSenha/RedefinirSenha';
-import Test from '../pages/test';
 
 const store = configureStore();
 
@@ -72,7 +71,6 @@ const Root = () => (
                             path="/enviar-projeto" 
                             component={FormularioProjeto} 
                         />
-                        <PrivateRoute path="/test" component={Test} />
                     </Switch>
                 </div>
             </div>

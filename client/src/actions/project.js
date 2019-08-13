@@ -166,7 +166,18 @@ export function getProject(handle) {
     return (dispatch) => {
         axios.get(`/api/projects/name/${handle}`)
         .then(res => {
-            dispatch(setProject(res.data));
+            axios.get(`/api/projects/image/${res.data.img}`)
+            .then(imgRes => {
+                console.log(imgRes);
+                dispatch(setProject({ 
+                    ...res.data, 
+                    img: imgRes.data.filename
+                }))
+            })
+            .catch(err => {
+                const errors = err.response.data;
+                return dispatch(handleErrors(errors));
+            })
         })
         .catch(err => {
             const errors = err.response.data;
