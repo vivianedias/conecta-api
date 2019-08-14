@@ -57,7 +57,7 @@ class Projetos extends Component {
 
 	render () {
 
-			const { history, projects } = this.props;
+			const { history, projects,  projectImg} = this.props;
 			const { filteredProjects } = this.state;
 			const isHome = history.location.pathname === '/projetos' ? false : true;
 
@@ -88,12 +88,13 @@ class Projetos extends Component {
 									</div>
 								</div>
 							)}
-							{projects && (
+							{projects && projectImg && (
 								<Card 
 									projects={filteredProjects.length > 0 
 										? filteredProjects 
 										: projects.slice(0, `${this.state.cardSlice}`)}
 									author={true}
+									projectImg={projectImg}
 								/>
 							)}
 						</div>
@@ -117,6 +118,7 @@ class Projetos extends Component {
 
 const mapStateToProps = state => ({
 	projects: state.project && state.project.allProjects,
+	projectImg: state.project && state.project.images
 })
 
 const mapDispatchToProps = dispatch => ({

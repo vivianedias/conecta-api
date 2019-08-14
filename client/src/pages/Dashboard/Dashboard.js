@@ -13,7 +13,7 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { projects } = this.props;
+        const { projects, projectImg } = this.props;
         return (
             <div className="dashboard">
                 <div className="dashboard__wrapper">
@@ -24,8 +24,8 @@ class Dashboard extends Component {
                                 <img className="add-project__plus" src={plus} alt="Símbolo de soma que ao ser clicado te redireciona para página de enviar projetos"/>
                             </div>
                         </Link>
-                        {projects && (
-                            <Card projects={projects} />
+                        {projects && projectImg && (
+                            <Card projects={projects} projectImg={projectImg}/>
                         )}
                     </div>
                 </div>
@@ -41,7 +41,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-    projects: state.project.userProjects
+    projects: state.project.userProjects,
+	projectImg: state.project && state.project.images
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

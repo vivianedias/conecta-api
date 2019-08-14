@@ -10,6 +10,7 @@ import {
     SET_PROJECT_ERRORS,
     SET_PROJECTS,
     SET_PROJECT,
+    SET_PROJECT_IMG
 } from './types';
 import axios from 'axios';
 import history from '../history';
@@ -87,12 +88,8 @@ const formatEstimatedValue = (value) => ({
 
 // Project - Register Project
 export function registerProject(projectForm) {
-    const project = {
-        ...projectForm,
-        pictureUrl: 'http://www.ospaparazzi.com.br/imagem/201203/121849353.jpg'
-    }
     return dispatch => {
-        axios.post('/api/projects', project)
+        axios.post('/api/projects', projectForm)
         .then((res) => {
             dispatch(setProjectSuccess('Seu projeto foi enviado com sucesso! :)', res.data.handle));
             localStorage.removeItem('projectRegistration');
@@ -147,7 +144,10 @@ export function getUserProjects() {
     return (dispatch) => {
         axios.get('/api/projects')
         .then(res => {
-            dispatch(setUserProjects(res.data));
+            res.data.map(projects => {
+                return dispatch(getProjectImg(projects._id, projects.img))
+            })
+            return dispatch(setUserProjects(res.data));
         })
         .catch(err => {
             const errors = err.response.data;
@@ -161,24 +161,15 @@ const setUserProjects = value => ({
     value
 });
 
-// Project - Get project (page)
+// Project - Get project (page) and make img api call
 export function getProject(handle) {
     return (dispatch) => {
         axios.get(`/api/projects/name/${handle}`)
+        // send project id and img id 
         .then(res => {
-            axios.get(`/api/projects/image/${res.data.img}`)
-            .then(imgRes => {
-                console.log(imgRes);
-                dispatch(setProject({ 
-                    ...res.data, 
-                    img: imgRes.data.filename
-                }))
-            })
-            .catch(err => {
-                const errors = err.response.data;
-                return dispatch(handleErrors(errors));
-            })
-        })
+            dispatch(getProjectImg(res.data._id, res.data.img))
+            return dispatch(setProject(res.data));
+        }) 
         .catch(err => {
             const errors = err.response.data;
             return dispatch(handleErrors(errors));
@@ -191,12 +182,33 @@ const setProject = value => ({
     value
 });
 
+export function getProjectImg(projectId, id){
+    return dispatch => {
+        axios.get(`/api/projects/image/${id}`)
+        .then(imgRes => {
+            dispatch(setProjectImg(projectId, imgRes.data.filename))
+        })
+        .catch(err => {
+            const errors = err.response.data;
+            return dispatch(handleErrors(errors));
+        })
+    }
+}
+
+const setProjectImg = (projectId, filename) => ({
+    type: SET_PROJECT_IMG,
+    projectId, filename
+});
+
 // Project - Get all projects
 export function getAllProjects() {
     return (dispatch) => {
         axios.get('/api/projects/all')
         .then(res => {
-            dispatch(setProjects(res.data));
+            res.data.map(projects => {
+                return dispatch(getProjectImg(projects._id, projects.img))
+            })
+            return dispatch(setProjects(res.data));
         })
         .catch(err => {
             const errors = err.response.data;

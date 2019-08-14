@@ -105,7 +105,8 @@ class Projeto extends Component {
       project, 
 			errors,
 			projectForm,
-      user: { isAuthenticated, user } 
+			user: { isAuthenticated, user },
+			projectImg
 		} = this.props;
 
     const { isEdit } = this.state;
@@ -113,13 +114,13 @@ class Projeto extends Component {
 
 		return (
       <div className="project">
-				{project && (
+				{project && projectImg && (
 					<React.Fragment>
 						<div className="project__wrapper">
 							<div className="project__main-content">
 								<img 
 									className="main-content__img" 
-									src={`http://localhost:5000/uploads/${project.img}`} 
+									src={`http://localhost:5000/uploads/${projectImg[project._id]}`} 
 									alt="" 
 								/>
 								<div className="main-content__text">
@@ -390,7 +391,8 @@ const mapStateToProps = state => ({
   project: state.project && state.project.project,
   projectForm: state.project && state.project.projectRegistration,
   errors: state.errors && state.errors.project,
-  user: state.auth
+	user: state.auth,
+	projectImg: state.project && state.project.images	
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Projeto));

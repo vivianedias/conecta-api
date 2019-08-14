@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Card.scss';
 
-const Card = ({ projects, author }) => {
+const Card = ({ projects, author, projectImg }) => {
     return (
 			<React.Fragment>
 				{projects.map(project => {
 						return (
-							<div key={project.id} className="user-project__card">
+							<div key={project._id} className="user-project__card">
 								<Link to={`/projeto/${project.handle}`}>
 									<img 
 										className="user-project__img" 
-										src={`http://localhost:5000/uploads/${project.img}`}
+										src={`http://localhost:5000/uploads/${projectImg[project._id]}`}
 										alt="Capa do projeto"
 									/>
 									<div className="user-project__content">

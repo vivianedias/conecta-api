@@ -8,6 +8,7 @@ import {
     SET_USER_PROJECTS,
     SET_PROJECT,
     SET_PROJECTS,
+    SET_PROJECT_IMG
 } from '../actions/types';
 
 const initialState = {
@@ -113,6 +114,14 @@ export function project(state = initialState, action) {
             return  { 
                 ...state,
                 allProjects: checkProjects
+            }
+        case SET_PROJECT_IMG:
+            return  { 
+                ...state,
+                images: {
+                    ...state.images,
+                    [action.projectId]: action.filename
+                }
             }
         default:
             return state;
