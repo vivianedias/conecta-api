@@ -4,3 +4,4 @@ npm-debug.log
 client/node_modules
 /yarn--*
 public/
+v8*
