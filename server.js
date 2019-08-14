@@ -3,20 +3,20 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const db = require('./config/db');
 const firebase = require('firebase');
-
+const keys = require('./config/keys');
 const users = require('./routes/api/users');
 const projects = require('./routes/api/projects');
 
 const app = express();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAxZweFnsN2gx3NAMULmzOskjepnX6eSgk",
-  authDomain: "abebe-conecta-3ad5e.firebaseapp.com",
-  databaseURL: "https://abebe-conecta-3ad5e.firebaseio.com",
-  projectId: "abebe-conecta-3ad5e",
-  storageBucket: "",
-  messagingSenderId: "131886864069",
-  appId: "1:131886864069:web:60d3e268965444c9"
+  apiKey: keys.firebase.apiKey,
+  authDomain: keys.firebase.authDomain,
+  databaseURL: keys.firebase.databaseURL,
+  projectId: keys.firebase.projectId,
+  storageBucket: keys.firebase.storageBucket,
+  messagingSenderId: keys.firebase.messagingSenderId,
+  appId: keys.firebase.appId
 };
 
 // Body parser middleware
