@@ -20,6 +20,8 @@ class Login extends Component {
             const query = history.location.search.replace(/^\?+/g, '');
             localStorage.setItem('defaultLocation', query);
         }
+
+        this.props.handleErrors({ email: undefined, password: undefined });
     }
 
     handleChange = (e) => {    
@@ -89,7 +91,7 @@ class Login extends Component {
                             <Link
                                 to={{
                                     pathname: "/cadastro",
-                                    search: `?${localStorage.defaultLocation}`,
+                                    search: `?login`,
                                 }}
                                 className="login__btn login__btn-signup button is-rounded"
                             >
