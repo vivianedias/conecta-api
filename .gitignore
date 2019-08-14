@@ -3,3 +3,4 @@ npm-debug.log
 /config/keys.js
 client/node_modules
 /yarn--*
+/public

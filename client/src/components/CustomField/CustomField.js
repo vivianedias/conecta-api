@@ -30,7 +30,7 @@ const CustomField = (
                             name={name} 
                             value={value} 
                             onChange={onChange} 
-                            className={`input ${error ? 'is-danger' : ''}`} 
+                            className={`custom-field__input input ${error ? 'is-danger' : ''}`} 
                             type={type} 
                             placeholder={placeholder} 
                             maxLength={maxLength}
@@ -47,7 +47,7 @@ const CustomField = (
                         )}
                     </div>
                     {help && <p className="help">{help}</p>}
-                    {error && 
+                    {typeof error !== 'undefined' && 
                     typeof error !== "object" && 
                         <p className="help is-danger">
                             {error}

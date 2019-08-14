@@ -300,6 +300,7 @@ class Projeto extends Component {
 										}
 										project={true}
 										placeholder="Insira até cinco palavras-chave"
+										error={errors && errors.tags}
 									/>
 								</div>
 								<div className={`other-content__wrapper 

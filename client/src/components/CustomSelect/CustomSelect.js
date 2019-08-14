@@ -39,7 +39,7 @@ const CustomSelect = (
 									<select 
 										name={name}
 										onChange={onChange}
-										className={selectClasses ? selectClasses : ''}
+										className={`custom-select__select ${selectClasses ? selectClasses : ''}`}
 										value={value}
 									>
 										<option value="">{firstValue}</option>

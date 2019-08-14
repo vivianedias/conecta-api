@@ -13,17 +13,17 @@ import {
 
 const initialState = {
     projectRegistration: {
-        handle: undefined,
-        name: undefined,
-        category: undefined,
-        description: undefined,
-        objective: undefined,
-        format: undefined,
-        specialNeeds: undefined,
-        location: undefined,
-        estimatedValue: undefined,
+        handle: '',
+        name: '',
+        category: '',
+        description: '',
+        objective: '',
+        format: '',
+        specialNeeds: '',
+        location: '',
+        estimatedValue: '',
         tags: [], // Do not change this initial value 
-        img: undefined,
+        img: '',
     },
     userProjects: [],
     project: {},

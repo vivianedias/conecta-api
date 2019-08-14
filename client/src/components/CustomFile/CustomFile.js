@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { uploadImg, handleErrors } from '../../actions/upload';
-import { handleProject } from '../../actions/project';
+import { uploadImg, handleUploadErrors } from '../../actions/upload';
+import { handleProject, handleErrors } from '../../actions/project';
 import './CustomFile.scss';
 class CustomFile extends Component { 
 
@@ -33,31 +33,34 @@ class CustomFile extends Component {
 			name: fileName,
 		})
 
-		if(typeof file === 'undefined') return validateBeforeNext('file', file);
+		if(typeof file === 'undefined') return validateBeforeNext('img', file);
 
-		handleErrors({ file: '' });
-		this.setState({ selectedFile: file })
+		handleErrors({ img: undefined });
+		this.setState({ selectedFile: file });
 	}
 
 	onSubmit = (e) => {
-		e.preventDefault();
 		const { selectedFile } = this.state;
-		const formData = new FormData()
-		formData.append('projectImg', selectedFile)
-		typeof selectedFile !== 'undefined' 
-			? this.props.handleImgInput(formData)
-			: this.props.validateBeforeNext('file', undefined);
+		
+		e.preventDefault();
+
+		const formData = new FormData();
+		formData.append('projectImg', selectedFile);
+
+		if (typeof selectedFile !== 'undefined') this.props.handleImgInput(formData)
 	}
 
 	render() {
-		const { errors, uploadRes } = this.props;
+		const { uploadErrors, projectErrors: { img }, uploadRes } = this.props;
 		return (
 			<div 
-				className={`custom-file
-				${uploadRes.file
-					? 'custom-file__content' 
-					: ''}`
-				}
+				className="custom-file"
+				style={{ 
+					justifyContent: `${uploadRes.img 
+						? 'center' 
+						: 'space-evenly'
+					}`
+				}}
 			>
 				<form 
 					encType="multipart/form-data"
@@ -66,7 +69,7 @@ class CustomFile extends Component {
 				>
 					<div className="field">
 						<div 
-							className="custom-file__file file is-danger has-name is-boxed"
+							className="custom-file__file file is-danger has-name"
 						>
 							<label className="file-label">
 								<input 
@@ -77,7 +80,7 @@ class CustomFile extends Component {
 								/>
 								<span className="file-cta">
 									<span className="file-icon">
-										<i className="fas fa-cloud-upload-alt" />
+										<i className="fas fa-upload" />
 									</span>
 									<span className="file-label">
 										Selecionar arquivo
@@ -87,11 +90,10 @@ class CustomFile extends Component {
 									{this.state.name}
 								</span>
 							</label>
-							{errors.file && <p className="help is-danger">{errors.file}</p>}
 						</div>
 					</div>
 					<button 
-						className={`custom-file__btn button ${uploadRes.isLoading 
+						className={`custom-file__btn button ${uploadRes.isLoading && !uploadErrors && !img
 							? 'is-loading' 
 							: ''}`
 						}
@@ -99,10 +101,24 @@ class CustomFile extends Component {
 						>
 						Upload
 					</button>
-					{uploadRes && 
-						<p className="custom-file__success">{uploadRes.msg}</p>
-					}
 				</form>
+				{img && !uploadErrors && !uploadRes.msg &&
+					<p 
+						className="help is-danger"
+					>
+						{this.props.projectErrors && img}
+					</p>
+				}
+				{uploadErrors && 
+					<p 
+						className="help is-danger"
+					>
+						{uploadErrors}
+					</p>
+				}
+				{uploadRes && 
+					<p className="custom-file__success">{uploadRes.msg}</p>
+				}
 				{uploadRes && (
 					<div className="custom-file__res">
 						<img 
@@ -122,7 +138,8 @@ class CustomFile extends Component {
 }
 
 const mapStateToProps = state => ({
-	errors: state.errors && state.errors.upload,
+	projectErrors: state.errors && state.errors.project,
+	uploadErrors: state.errors && state.errors.upload,
 	uploadRes: state.upload
 })
 
@@ -132,6 +149,9 @@ const mapDispatchToProps = dispatch => ({
 	},
 	handleErrors: value => {
 		dispatch(handleErrors(value));
+	},
+	handleUploadErrors: value => {
+		dispatch(handleUploadErrors(value));
 	},
 	setProjectImg: value => {
 		dispatch(handleProject(value));

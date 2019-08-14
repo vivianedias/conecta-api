@@ -11,7 +11,6 @@ const initialState = {
 	user: {},
 	login: {},
 	project: {},
-	upload: {}
 }
 
 export function errors(state = initialState, action) {
@@ -48,12 +47,9 @@ export function errors(state = initialState, action) {
 		case SET_RECOVERY_ERRORS:
 			return  { ...state, ...action.value }
 		case SET_IMG_UPLOAD_ERRORS:
-			const checkUpload = state.project 
-				? { ...state.project, ...action.value } 
-				: action.value;
 			return  { 
 				...state, 
-				upload: checkUpload
+				...action.value
 			}
 		default:
 			return state;

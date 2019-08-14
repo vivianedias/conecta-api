@@ -5,9 +5,12 @@ export function uploadImg(img) {
   return dispatch => {
     dispatch(handleImgRes(true));
     return axios.post(`/api/projects/upload`, img)
-    .then(res => dispatch(handleImgRes(false, res.data)))
+    .then(res => {
+      dispatch(handleUploadErrors({ upload: undefined }));
+      dispatch(handleImgRes(false, res.data))
+    })
     .catch(err => {
-      handleErrors(err.response.data);
+      dispatch(handleUploadErrors(err.response.data));
     });
   };
 };
@@ -17,7 +20,7 @@ const handleImgRes = (isLoading, value) => ({
   isLoading, value
 });
 
-export function handleErrors(value) {
+export function handleUploadErrors(value) {
   return (dispatch) => {
     dispatch(setImgUploadErrors(value))
   };

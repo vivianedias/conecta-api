@@ -3,7 +3,6 @@
 .formulario-projeto {
     display: flex;
     justify-content: center;
-    height: 90vh;
     &__wrapper {
         @include wrapperSize;
         display: flex;

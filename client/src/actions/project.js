@@ -89,7 +89,11 @@ const formatEstimatedValue = (value) => ({
 // Project - Register Project
 export function registerProject(projectForm) {
     return dispatch => {
-        axios.post('/api/projects', projectForm)
+        const project = {
+            ...projectForm,
+            handle: projectForm.handle.replace(/\s/g, '-').toLowerCase()
+        }
+        axios.post('/api/projects', project)
         .then((res) => {
             dispatch(setProjectSuccess('Seu projeto foi enviado com sucesso! :)', res.data.handle));
             localStorage.removeItem('projectRegistration');

@@ -82,7 +82,7 @@ class Tags extends Component {
 								leftIcon="fa-hashtag"
 								showRightIcon={true}
 								help="Dica: Insira palavras-chave que estejam relacionadas com o seu projeto, assim fica mais fácil dele aparecer na busca!"
-								error={tags && tags.length === 0 && error.tags}
+								error={error}
 								isEdit={isEdit}
 								project={project}
 							/>
@@ -120,7 +120,6 @@ class Tags extends Component {
 }
 
 const mapStateToProps = state => ({
-	error: state.errors && state.errors.project,
 	projectForm: state.project && state.project.projectRegistration
 });
 
