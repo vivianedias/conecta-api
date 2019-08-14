@@ -1,0 +1,57 @@
+@import '../../assets/mixins/variables.scss';
+
+.dashboard {
+    background-color: #e6e6e6;
+    min-height: 91vh;
+    display: flex;
+    justify-content: center;
+    &__wrapper {
+        @include wrapperSize;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    &__title {
+        align-self: start;
+        margin-top: 40px;
+        @include uppercaseTitle;
+    }
+    &__add-project {
+        max-width: 300px;
+    }
+    &__projects {
+        @media(min-width: 650px) {
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+            width: 600px;
+        }
+        @media(min-width: $mobile) {
+            justify-content: space-between;
+        }
+        @media(min-width: $desktop) {
+            width: 750px;
+        }
+    }
+}
+
+.add-project {
+    &__card {
+        @include card;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__plus {
+        width: 25%;
+    }
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 450px;
+        justify-content: space-between;
+    }
+}

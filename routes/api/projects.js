@@ -61,7 +61,8 @@ router.post('/upload', passport.authenticate('jwt', { session: false }),
 			const errors = {}
 
 			if(err) {
-				return res.status(404).json(err);			
+				errors.upload = err;
+				return res.status(404).json(errors);			
 			}
 
 			if(!req.file) {
@@ -77,7 +78,10 @@ router.post('/upload', passport.authenticate('jwt', { session: false }),
 						file: `uploads/${img.filename}`,
 						id: img._id
 					}))
-				.catch(err => res.status(404).json(err));				
+				.catch(err => {
+					errors.upload = 'Ocorreu um erro ao fazer o upload da imagem'
+					res.status(404).json(errors)
+				});				
 		});
 })
 
@@ -88,8 +92,11 @@ router.get('/image/:id', (req, res) => {
 	const errors = {};
 	Images.findById(req.params.id)
 		.then(img => {
-			console.log(img);
 			res.send(img);
+		})
+		.catch(err => {
+			errors.upload = 'Ocorreu um erro ao carregar a imagem';
+			res.status(404).json(errors);
 		})
 })
 

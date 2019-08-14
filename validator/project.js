@@ -77,7 +77,7 @@ module.exports = function validateProjectInput(data) {
 
     // img
     if(Validator.isEmpty(data.img)) {
-        errors.img = 'Esse campo é obrigatório';
+        errors.img = 'Insira uma imagem de capa para o seu projeto';
     }
 
     return {

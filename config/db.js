@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const keys = require('./keys');
 
 const MONGO_USERNAME = 'abebeconecta';
-const MONGO_PASSWORD = keys.DB_PASSWORD;
+const MONGO_PASSWORD = keys.dbPassword;
 const MONGO_HOSTNAME = '127.0.0.1';
 const MONGO_PORT = '27017';
 const MONGO_DB = 'abebeconecta';

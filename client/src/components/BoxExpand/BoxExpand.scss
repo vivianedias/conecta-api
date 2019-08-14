@@ -1,0 +1,30 @@
+@import '../../assets/mixins/variables.scss';
+
+.box-expand {
+    &.section {
+        padding: 0;
+        margin-bottom: 1.5rem;
+        &:first-child { 
+            padding-top: 1rem;
+        }
+        &:last-child {
+            padding-bottom: 3rem;
+            margin-bottom: unset;
+        }
+    }
+    &__card {
+        &-content {
+            &--hide {
+                transition: height 0, opacity 250ms 0ms;
+                opacity: 0.0;
+                height: 0px;
+            }
+            &--show {
+                padding: 1.5rem;
+                opacity: 1.0;
+                box-sizing: border-box;
+                transition: height 250ms 0ms, opacity 150ms 150ms;
+            }
+        }
+    }
+}

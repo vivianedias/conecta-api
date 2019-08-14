@@ -1,0 +1,55 @@
+@import '../../assets/mixins/variables.scss';
+
+.user-project {
+    &__card {
+        @include card;
+        cursor: pointer;
+    }
+    &__title {
+        font-family: $mainFont;
+        text-transform: uppercase;
+        font-weight: 700;
+        @media(min-width: $desktop) {
+            font-weight: unset;
+        }
+        &.title {
+            margin-bottom: unset;
+            font-size: 16px;
+            @media(min-width: $mobile) {
+                font-size: 18px;
+            }
+        }
+    }
+    &__img {
+        border-radius: 20px 20px 0 0;
+        width: 100%;
+        max-height: 225px;
+    }
+    &__content {
+        padding: 5px 15px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        @media(min-width: $desktop) {
+            height: 175px;
+        }
+    }
+    &__author {
+        text-transform: uppercase;
+        font-family: $mainFont; 
+        font-size: 10px;
+        @media(min-width: $mobile) {
+            font-size: 12px;
+        }
+        @media(min-width: $desktop) {
+            font-size: 13px;
+        } 
+    }
+    &__description {
+        @media(min-width: $mobile) {
+            font-size: 14px;
+        }
+        font-size: 12px;
+    }
+}

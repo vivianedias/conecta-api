@@ -151,7 +151,7 @@ router.post('/forgot-password', (req, res) => {
 				{ new: true }
 			)
 			.then(() => {
-				sgMail.setApiKey(keys.SENDGRID_API_KEY);
+				sgMail.setApiKey(keys.sendgridApiKey);
 	
 				const msg = {
 					to: email,
