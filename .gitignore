@@ -1,6 +1,6 @@
-/node_modules
+node_modules/
 npm-debug.log
 /config/keys.js
 client/node_modules
 /yarn--*
-/public
+public/
