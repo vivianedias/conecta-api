@@ -15,8 +15,7 @@ Entra na pasta do client e roda o front-end apenas.
 ### `npm run client-install`
 
 Instala as dependecias do front sem precisar ir até a pasta client.
-
-/ *----------------------------------------------------* /
+_____________________________________________________________________________________________________________________________
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
