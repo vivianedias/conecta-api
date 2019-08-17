@@ -1,16 +1,16 @@
-import { SET_IMG_UPLOAD } from '../actions/types';
+import { SET_IMG_UPLOAD } from '../actions/types'
 
 const initialState = {}
 
-export function upload(state = initialState, action) {
+export function upload (state = initialState, action) {
   switch (action.type) {
     case SET_IMG_UPLOAD:
-      return  { 
-        ...state, 
+      return {
+        ...state,
         ...action.value,
-				isLoading: action.isLoading
+        isLoading: action.isLoading
       }
     default:
-      return state;
+      return state
   }
 };

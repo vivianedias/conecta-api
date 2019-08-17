@@ -1,25 +1,25 @@
-import { SET_USER } from '../actions/types';
+import { SET_USER } from '../actions/types'
 
-const initialState = 
+const initialState =
 {
-    name: '',
-    email: '',
-    password: '',
-    confirmedPassword: '',
-    birthday: {},
-    gender: '',
-    color: '',
-    state: {},
-    city: '',
-    currentField: '',
-    socialNumber: '',
+  name: '',
+  email: '',
+  password: '',
+  confirmedPassword: '',
+  birthday: {},
+  gender: '',
+  color: '',
+  state: {},
+  city: '',
+  currentField: '',
+  socialNumber: ''
 }
 
-export function userForm(state = initialState, action) {
-    switch (action.type) {
-        case SET_USER:
-            return  { ...state, ...action.value }
-        default:
-            return state;
-    }
+export function userForm (state = initialState, action) {
+  switch (action.type) {
+    case SET_USER:
+      return { ...state, ...action.value }
+    default:
+      return state
+  }
 };
