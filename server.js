@@ -2,22 +2,12 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const db = require('./config/db')
-const firebase = require('firebase')
 const keys = require('./config/keys')
+const path =  require('path')
 const users = require('./routes/api/users')
 const projects = require('./routes/api/projects')
 
 const app = express()
-
-const firebaseConfig = {
-  apiKey: keys.firebase.apiKey,
-  authDomain: keys.firebase.authDomain,
-  databaseURL: keys.firebase.databaseURL,
-  projectId: keys.firebase.projectId,
-  storageBucket: keys.firebase.storageBucket,
-  messagingSenderId: keys.firebase.messagingSenderId,
-  appId: keys.firebase.appId
-}
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -41,10 +31,19 @@ require('./config/passport')(passport)
 app.use('/api/users', users)
 app.use('/api/projects', projects)
 
+// Serve static assets if in production
+if(proccess.env.NODE_ENV === 'production') {
+  // Set a static folder
+  app.user(express.static(client/build))
+
+  app.get('*', (req, res => {
+    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  }))
+}
+
 // TODO: colocar isso em um .env
 const port = process.env.PORT || 5000
 
 app.use(express.static('public'))
-firebase.initializeApp(firebaseConfig)
 
 app.listen(port, () => console.log(`Server running on port ${port}`))
