@@ -4,11 +4,11 @@ import configureStore from '../store'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { Router, Switch } from 'react-router-dom'
-import history from '../history'
 
 import jwtDecode from 'jwt-decode'
 import setAuthToken from '../services/setAuthToken'
 import { handleAuth, logoutUser } from '../actions/auth'
+import history from '../history'
 
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import Header from './Header/Header'

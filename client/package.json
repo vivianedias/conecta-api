@@ -14,7 +14,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "jwt-decode": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,8 +40,12 @@
     ]
   },
   "devDependencies": {
-    "jwt-decode": "^2.2.0",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-svg": "^10.0.11"
+  },
+  "engines": {
+    "node": "8.10.0",
+    "npm": "3.5.2",
+    "yarn": "1.x"
   }
 }
