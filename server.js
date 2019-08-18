@@ -32,7 +32,7 @@ app.use('/api/users', users)
 app.use('/api/projects', projects)
 
 // Serve static assets if in production
-if(proccess.env.NODE_ENV === 'production') {
+if(process.env.NODE_ENV === 'production') {
   // Set a static folder
   app.user(express.static(client/build))
 
