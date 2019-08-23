@@ -1,7 +1,7 @@
 node_modules/
 npm-debug.log
-/config/keys_dev.js
+config/keys_dev.js
 client/node_modules
-/yarn--*
+yarn--*/
 public/uploads
 v8*
