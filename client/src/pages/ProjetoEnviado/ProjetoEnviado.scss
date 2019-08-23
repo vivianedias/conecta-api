@@ -1,0 +1,27 @@
+@import '../../assets/mixins/variables.scss';
+
+.projeto-enviado {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__msg {
+        @include uppercaseTitle;
+        text-align: center;
+    }
+    &__wrapper {
+        @include wrapperSize;
+        @media(min-width: $desktop) {
+            width: 80%;
+        }
+    }
+    &__content {
+        text-align: center;
+    }
+    &__single {
+        &.subtitle {
+            margin-bottom: 0.5rem;
+        }
+    }
+}

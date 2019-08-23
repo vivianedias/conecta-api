@@ -1,0 +1,66 @@
+@import '../../assets/mixins/variables.scss';
+
+.cadastro {
+    display: flex;
+    justify-content: center;
+    &__wrapper {
+        @include formWrapper;
+        padding: 30px;  
+    }
+    &__title {
+        @include uppercaseTitle;
+    }
+
+    &__form {
+        &-sideBySide {
+            display: flex;
+            margin-bottom: 1.5rem;
+            flex-direction: column;
+            @media(min-width: $tablet) {
+                margin-bottom: unset;
+                flex-direction: unset;
+            }
+        }
+        &-state {
+            @media(min-width: $tablet) {
+                padding-right: 20px;
+            }
+        }
+    }
+}
+
+.form {
+    &__gender {
+        @media(min-width: $tablet) {
+            padding-right: 20px;
+        }
+    }
+    &__birthday {
+        &-wrapper {
+            display: flex;
+        }
+        &-control {
+            margin-right: 20px;
+        }
+    }
+    &__city {
+        &-select {
+            width: 200px;
+        }
+    }
+    &__social {
+        &-input {
+            margin-top: 15px;
+        }
+    }
+    &__select {
+        min-width: 100%;
+        &-wrapper {
+            min-width: 100%;
+        }
+    }    
+}
+
+.field:not(:last-child) {
+    margin-bottom: 1.5rem;
+}

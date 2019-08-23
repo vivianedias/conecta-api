@@ -1,0 +1,21 @@
+.tags {
+    align-items: unset;
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        &>.tags {
+            margin-right: 15px;
+        }
+    }
+    &__input {
+        display: flex;
+        &-field {
+            margin-right: 10px;
+        }
+        &-icon {
+            position: relative;
+            top: 25px;
+            cursor: pointer;
+        }
+    }
+}

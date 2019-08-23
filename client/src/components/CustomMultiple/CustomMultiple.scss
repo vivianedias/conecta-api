@@ -1,0 +1,40 @@
+@import '../../assets/mixins/variables.scss';
+
+.custom-multiple {
+    &__wrapper {
+        overflow-y: auto;
+        max-height: 100px;
+    }
+    &__input {
+        border: none;
+        width: 100%;
+        font-size: 14px;
+        &:hover {
+            border-bottom: 1px solid rgba(0,0,0,0.12);
+        }
+        &:focus {
+            border-bottom: 2px solid $mainColor;
+        }
+        &::placeholder {
+            color: #000;
+        }
+    }
+    &__control {
+        height: 50px;
+        display: flex;
+    }
+    &__numbering {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        font-size: 14px;
+        &-btn {
+            margin-right: 20px;
+            font-size: 14px;
+        }
+    }
+    &__btn {
+        font-size: 14px;
+        color: rgba(0,0,0,0.54);
+    }
+}

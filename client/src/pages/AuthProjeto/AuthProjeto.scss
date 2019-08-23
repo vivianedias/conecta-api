@@ -1,0 +1,56 @@
+@import '../../assets/mixins/variables.scss';
+
+.enviar-projeto {
+    background: linear-gradient(to right, #4A00E0, #8E2DE2);
+    &__first-section {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    &__title {
+        @include wrapperSize;
+        text-align: center;
+        font-family: $mainFont;
+        color: #fff;
+        margin-top: 2rem;
+    }
+    &__btn {
+        margin: 20px 0 40px 0;  
+    }
+    &__second-section {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-color: #fff;
+        height: 100vh;
+    }
+}
+
+.second-section {
+    &__wrapper {
+        @include wrapperSize;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 40px;
+    }
+    &__form {
+        @include formWrapper;
+    }
+    &__title {
+        color: $mainColor;
+        font-family: $mainFont;
+    }
+    &__btn {
+        margin-top: 20px;
+    }
+}
+
+.custom-select {
+    &__send-project--wrapper, &__send-project--select {
+        width: 100%
+    }
+
+}

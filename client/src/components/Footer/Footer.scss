@@ -1,0 +1,91 @@
+@import '../../assets/mixins/variables.scss';
+.footer {
+    padding: 3rem 1.5rem 3rem;
+    width: 100%;
+    &__wrapper {
+        display: flex;    
+        flex-direction: column;
+        @media(min-width: $desktop) {
+            justify-content: space-around;
+            flex-direction: row;
+        }
+    }
+    &__navigation {
+        @media(min-width: 430px) {
+            display: flex;
+            justify-content: center;
+        }
+        @media(min-width: $desktop) {
+            justify-content: unset;
+        }
+    }
+    &__content {
+        @media(min-width: 430px) {
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+        @media(min-width: $desktop) {
+            justify-content: flex-start;
+        }
+    }
+    &__img {
+        &--vaitec {
+            @media(min-width: $mobile) {
+                height: 180px;
+                display: initial;
+            }
+            display: none;
+        }
+        &-wrapper {
+            display: none;
+            @media(min-width: $mobile) {
+                display: flex;
+                margin-top: 40px;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+.navigation {
+    &__img {
+        &--abebe {
+            height: 100px;
+            margin-bottom: 20px;
+            @media(min-width: 430px) {
+                margin: unset;
+            }
+            @media(min-width: $mobile) {
+                height: 200px;
+            }
+        }
+    }
+    &__stamp {
+        @media(min-width: $desktop) {
+            text-align: left;
+        }
+        text-align: center;
+        &-wrapper {
+            margin-top: 30px;
+        }
+    }
+    &__list {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        &-item {
+            text-transform: uppercase;
+            font-family: $mainFont;
+            margin-bottom: 5px;
+            @include showLink;
+            @media(min-width: 430px) {
+                margin-bottom: unset;
+            }
+        } 
+        &-link {
+            text-decoration: none;
+        }
+    }
+}

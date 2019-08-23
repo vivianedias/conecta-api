@@ -1,0 +1,95 @@
+$mainColor: #7300ff;
+$isDanger: #ff3860;
+$mainFont: 'Comfortaa', sans-serif;
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 992px;
+$largeDesktop: 1024px;
+
+@mixin uppercaseTitle {
+    color: $mainColor;
+    text-transform: uppercase;
+    font-family: "Comfortaa", sans-serif;
+}
+
+@mixin showAndFadeLink {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: $mainColor;
+        transform-origin: bottom left;
+        transform: scaleX(1);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    &:hover::before {
+        transform: scaleX(0);
+        transform-origin: bottom right;
+    }
+}
+
+@mixin showLink {
+    position: relative;              
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $mainColor;
+        transform-origin: bottom right;
+        transform: scaleX(0);
+        transition: transform 0.5s ease;
+    }
+    &:hover::before {
+        transform-origin: bottom left;
+        transform: scaleX(1);
+    } 
+    &:last-child {
+        line-height: 1.5;
+    }
+}
+
+@mixin wrapperSize {
+    width: 90%;
+    @media(min-width: $tablet) {
+        width: 80%;
+    }
+    @media(min-width: $largeDesktop) {
+        width: 75%;
+    }
+}
+
+@mixin formWrapper {
+    width: 90%;
+    @media(min-width: $tablet) {
+        width: 60%;
+    }
+    @media(min-width: $largeDesktop) {
+        width: 50%;
+    }
+}
+
+@mixin card {
+    @media(min-width: $desktop) {
+        width: 300px;
+        height: 400px;
+    }
+    width: 250px;
+    height: 380px;
+    margin-bottom: 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    &:hover {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+}
