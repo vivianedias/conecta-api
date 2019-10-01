@@ -9,7 +9,13 @@ class Projetos extends Component {
   render () {
     return (
       <div className='projetos-page'>
-        <img className='projetos-page__img' src={projectSearch} alt='' />
+        <div className="projetos-page__img-wrapper">
+          <img 
+            className='projetos-page__img' 
+            src={projectSearch} 
+            alt='' 
+          />
+        </div>
         <CompProjetos history={this.props.history} />
         <Footer />
       </div>

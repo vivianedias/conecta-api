@@ -1,5 +1,18 @@
 @import '../../assets/mixins/variables.scss';
 
 .projetos-page {
-
+  &__img {
+    &-wrapper {
+      @media(min-width: $tablet) {
+        height: 50vh;
+      }
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    @media(min-width: $tablet) {
+      position: relative;
+      top: 50px;
+    }
+  }
 }

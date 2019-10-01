@@ -3,9 +3,10 @@
 Criação de API para projeto abebe-conecta. Usando NodeJS, ExpressJS e MongoDB.
 
 ## Primeira vez fazendo o install? Segue esse passo a passo:
-  - Na pasta '/' do projeto dê `sudo npm i`
-  - Depois `sudo npm client-install` para instalar as dependencias do frontend
-  - E por fim rode o server e o client junto com `sudo npm run dev`
+
+- Na pasta '/' do projeto dê `sudo npm i`
+- Depois `sudo npm client-install` para instalar as dependencias do frontend
+- E por fim rode o server e o client junto com `sudo npm run dev`
 
 ## Scripts Disponíveis
 
